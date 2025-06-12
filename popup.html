@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>URL Safety Checker</title>
+  <style>
+    body {
+      width: 350px;
+      padding: 15px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .status-box {
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .safe {
+      background-color: #e7f5e7;
+      border: 1px solid #28a745;
+      color: #1e7e34;
+    }
+
+    .unsafe {
+      background-color: #fdf2f2;
+      border: 1px solid #dc3545;
+      color: #c82333;
+    }
+
+    .warning {
+      background-color: #fff3cd;
+      border: 1px solid #ffc107;
+      color: #856404;
+    }
+
+    .url-display {
+      word-break: break-all;
+      margin-bottom: 10px;
+      padding: 10px;
+      background: #f8f9fa;
+      border-radius: 4px;
+      border: 1px solid #dee2e6;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.2s;
+    }
+
+    .mark-safe {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .mark-unsafe {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .feedback-section {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #dee2e6;
+    }
+
+    .loading {
+      text-align: center;
+      color: #6c757d;
+    }
+
+    .reason {
+      margin-top: 8px;
+      font-size: 0.9em;
+      color: #6c757d;
+    }
+
+    .user-modified {
+      font-style: italic;
+      color: #17a2b8;
+      font-size: 0.85em;
+      margin-top: 5px;
+    }
+
+    .session-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      margin: 5px 0;
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 8px;
+    }
+
+    .session-info {
+      flex: 1;
+    }
+
+    .session-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .restore-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .save-session-container {
+      display: flex;
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    #sessionName {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+    }
+
+    .save-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="loading" class="loading">
+      Checking URL safety...
+    </div>
+
+    <div id="result" style="display: none;">
+      <div class="url-display">
+        <strong>Current URL:</strong>
+        <div id="current-url"></div>
+      </div>
+
+      <div id="status-box" class="status-box">
+        <div id="status-message"></div>
+        <div id="reason" class="reason"></div>
+        <div id="user-modified" class="user-modified"></div>
+      </div>
+
+      <div class="buttons">
+        <button id="markSafe" class="mark-safe">Mark as Safe</button>
+        <button id="markUnsafe" class="mark-unsafe">Mark as Unsafe</button>
+      </div>
+
+      <div class="feedback-section">
+        <p>Your feedback helps improve URL detection accuracy for all users.</p>
+      </div>
+    </div>
+
+    <div id="error" class="status-box unsafe" style="display: none;">
+      <div id="error-message"></div>
+    </div>
+
+    <button id="save-session" class="save-btn">Save Current Session</button>
+
+    <h2>Saved Sessions:</h2>
+    <div id="saved-sessions"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
